@@ -1,11 +1,14 @@
 # Settings in the [build] context are global and are applied to all contexts unless otherwise overridden by more specific contexts.
 [build]
-  command = './netlify/build.sh'
+  command = 'jekyll build'
 
 [build.environment]
   RUBY_VERSION = "2.5.4"
   CANDIDATE_RELEASE = ""
   CURRENT_RELEASE = "v3.12"
+
+[context.branch-deploy]
+  command = "make bin/helm && export PATH=$PATH:$(pwd)/bin && jekyll build && mv _site/sitemap.xml _site/latest-sitemap.xml"
 
 [[headers]]
   for = "/*.yaml"
