@@ -1,12 +1,41 @@
 # Settings in the [build] context are global and are applied to all contexts unless otherwise overridden by more specific contexts.
 [build]
-  command = './netlify/build.sh'
+  command = 'jekyll build'
 
 [build.environment]
   RUBY_VERSION = "2.5.4"
-  CANDIDATE_RELEASE = ""
-  CURRENT_RELEASE = "v3.15"
-  CUSTOM_ARCHIVE_PATH = "/archive"
+
+[context.production]
+  command = '''
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml
+  mv _site/sitemap.xml _site/release-legacy-sitemap.xml
+  mv _site/sitemap.xml _site/latest-sitemap.xml
+  mv netlify/sitemap-index.xml _site/sitemap.xml
+  mv netlify/_redirects _site/_redirects
+  '''
+
+[context.branch-deploy]
+  command = '''
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml
+  '''
+
+[context.deploy-preview]
+  command = '''
+  echo 'url: $DEPLOY_PRIME_URL' > _config_url.yml
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml,_config_url.yml
+  '''
+[context.release-legacy]
+  command = '''
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml
+  '''
 
 [[headers]]
   for = "/*.yaml"

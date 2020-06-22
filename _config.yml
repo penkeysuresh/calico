@@ -3,6 +3,7 @@
 
 # Make our URLs look nice. We're not a blog with dated posts, we just want the title.
 permalink:     /:title.html
+baseurl: "master"
 
 archive: false
 noindex: false
