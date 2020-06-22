@@ -25,7 +25,7 @@
 
 [context.deploy-preview]
   command = '''
-  echo 'url: $DEPLOY_PRIME_URL' > _config_url.yml
+  echo "url: $DEPLOY_PRIME_URL" > _config_url.yml
   make bin/helm
   export PATH=$PATH:$(pwd)/bin
   jekyll build --config _config.yml,_config_url.yml
