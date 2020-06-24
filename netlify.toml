@@ -1,12 +1,71 @@
 # Settings in the [build] context are global and are applied to all contexts unless otherwise overridden by more specific contexts.
 # The cp, bundle install and bundle exec parts are only required to work around not being able to put the Gemfile int he root directory. It can't go in the root because that breaks the jekyll/jekyll container.
 [build]
-  command = 'export PATH=$PATH:/opt/build/repo/bin; cp netlify/Gemfile Gemfile; make bin/helm; bundle install && bundle exec jekyll build'
+  command = 'jekyll build'
 
-# Deploy Preview context: All Deploy Previews will inherit these settings.
-# Override the build command to include the Preview URL
+[build.environment]
+  RUBY_VERSION = "2.5.4"
+  CUSTOM_ARCHIVE_PATH = "/archive"
+
+[context.production]
+  command = '''
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml
+  mv _site/sitemap.xml _site/release-legacy-sitemap.xml
+  mv _site/sitemap.xml _site/latest-sitemap.xml
+  mv netlify/sitemap-index.xml _site/sitemap.xml
+  mv netlify/_redirects _site/_redirects
+  '''
+
+[context.branch-deploy]
+  command = '''
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml
+  '''
+
 [context.deploy-preview]
-  command = 'export PATH=$PATH:/opt/build/repo/bin; cp netlify/Gemfile Gemfile; echo "url: $DEPLOY_PRIME_URL" >_config_url.yml; make bin/helm; bundle install && bundle exec jekyll build --config _config.yml,_config_url.yml'
+  command = '''
+  echo "url: $DEPLOY_PRIME_URL" > _config_url.yml
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml,_config_url.yml
+  '''
+[context.release-legacy]
+  command = '''
+  make bin/helm
+  export PATH=$PATH:$(pwd)/bin
+  jekyll build --config _config.yml --baseurl=$CUSTOM_ARCHIVE_PATH
+  '''
+
+[[redirects]]
+  from = "/v3.14/*"
+  to = "https://release-v3-14--calico-test.netlify.app/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+[[redirects]]
+  from = "/master/*"
+  to = "https://master--calico-test.netlify.app/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+[[redirects]]
+  from = "/archive/v3.11/*"
+  to = "https://release-legacy--calico-test.netlify.app/archive/v3.11/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+[[redirects]]
+  from = "/archive/v3.10/*"
+  to = "https://release-legacy--calico-test.netlify.app/archive/v3.10/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
 
 [[headers]]
   for = "/*.yaml"
