@@ -37,7 +37,7 @@
   command = '''
   make bin/helm
   export PATH=$PATH:$(pwd)/bin
-  jekyll build --config _config.yml --baseurl /archive
+  jekyll build --config _config.yml
   '''
 
 [[redirects]]
@@ -55,15 +55,15 @@
   headers = {X-From = "Netlify"}
 
 [[redirects]]
-  from = "/archive/v3.11/*"
-  to = "https://release-legacy--calico-test.netlify.app/archive/v3.11/:splat"
+  from = "/v3.11/*"
+  to = "https://release-legacy--calico-test.netlify.app/v3.11/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
 
 [[redirects]]
-  from = "/archive/v3.10/*"
-  to = "https://release-legacy--calico-test.netlify.app/archive/v3.10/:splat"
+  from = "/v3.10/*"
+  to = "https://release-legacy--calico-test.netlify.app/v3.10/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
