@@ -32,11 +32,12 @@
   export PATH=$PATH:$(pwd)/bin
   jekyll build --config _config.yml,_config_url.yml
   '''
+
 [context.release-legacy]
   command = '''
   make bin/helm
   export PATH=$PATH:$(pwd)/bin
-  jekyll build --config _config.yml --baseurl=$CUSTOM_ARCHIVE_PATH
+  jekyll build --config _config.yml --baseurl /archive
   '''
 
 [[redirects]]
