@@ -4,7 +4,7 @@ description: What's new, and why features provide value for upgrading.
 canonical_url: '/release-notes/index'
 ---
 
-The following table shows component versioning for Calico Testing {{site.prodname}}  **{{ page.version }}**.
+The following table shows component versioning for Calico Testings {{site.prodname}}  **{{ page.version }}**.
 
 
 To select a different version, click **Releases** in the top navigation bar.
