@@ -43,8 +43,15 @@
   '''
 
 [[redirects]]
-  from = "/v3.14/*"
+  from = "/archive/v3.14/*"
   to = "https://release-v3-14--calico-test.netlify.app/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+[[redirects]]
+  from = "/archive/v3.13/*"
+  to = "https://release-v3-13--calico-test.netlify.app/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -57,15 +64,15 @@
   headers = {X-From = "Netlify"}
 
 [[redirects]]
-  from = "/v3.11/*"
-  to = "https://release-legacy--calico-test.netlify.app/v3.11/:splat"
+  from = "/archive/v3.11/*"
+  to = "https://release-legacy--calico-test.netlify.app/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
 
 [[redirects]]
-  from = "/v3.10/*"
-  to = "https://release-legacy--calico-test.netlify.app/v3.10/:splat"
+  from = "/archive/v3.10/*"
+  to = "https://release-legacy--calico-test.netlify.app/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -82,10 +89,5 @@
 
 [[headers]]
   for = "/*.sh"
-  [headers.values]
-    content-type = "text/x-shellscript"
-
-[[headers]]
-  for = "/*.bash"
   [headers.values]
     content-type = "text/x-shellscript"
