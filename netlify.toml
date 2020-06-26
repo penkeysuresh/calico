@@ -62,12 +62,12 @@
   jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml,$(pwd)/netlify/_manifests_only.yml
   '''
 
-[[redirects]]
-  from = "/archive/v3.14/*"
-  to = "https://release-v3-14--calico-test.netlify.app/archive/v3.14/:splat"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
+#[[redirects]]
+#  from = "/archive/v3.14/*"
+#  to = "https://release-v3-14--calico-test.netlify.app/archive/v3.14/:splat"
+#  status = 200
+#  force = true
+#  headers = {X-From = "Netlify"}
 
 [[redirects]]
   from = "/master/*"
