@@ -29,10 +29,7 @@
   command = '''
   make bin/helm
   export PATH=$PATH:$(pwd)/bin
-  # build for website
-  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml --baseurl "/archive/$RELEASE_VERSION"
-  # build for manifests, override base url from config to version
-  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml,$(pwd)/netlify/_manifests_only.yml --baseurl /$RELEASE_VERSION --destination _site/$RELEASE_VERSION
+  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml
   '''
 
 [context.deploy-preview]
@@ -45,13 +42,13 @@
 
 # Deploys master branch as a seperate individual sites (all release branches)
 # Master is to have baseurl set as /master in the _config.yml
-[context.master]
-  command = '''
-  make bin/helm
-  export PATH=$PATH:$(pwd)/bin
-  # build for website
-  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml
-  '''
+#[context.master]
+#  command = '''
+#  make bin/helm
+#  export PATH=$PATH:$(pwd)/bin
+#  # build for website
+#  jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml
+#  '''
 
 #should not contain any baseurl in _config.yml
 [context.release-legacy]
