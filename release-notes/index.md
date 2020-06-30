@@ -4,10 +4,10 @@ description: What's new, and why features provide value for upgrading.
 canonical_url: '/release-notes/index'
 ---
 
-The following table shows component versioning for {{site.prodname}}  **{{ page.version }}**.
+The following table shows component versioning for {{site.prodname}}  **{{ page.version }}**. Sample change.
 
 
-To select a different version, click **Releases** in the top navigation bar.
+To select a different version, click **Releases** in the top navigation bar. 
 
 {% for release in site.data.versions %}
 ## {{ release.title }}
