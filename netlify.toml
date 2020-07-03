@@ -22,7 +22,6 @@
   make bin/helm
   export PATH=$PATH:$(pwd)/bin
   jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml --baseurl /archive
-  jekyll build --config _config.yml,$(pwd)/netlify/_manifests_only.yml
   '''
 
 [[headers]]
