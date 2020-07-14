@@ -93,7 +93,7 @@
 
 [[redirects]]
   from = "/master/*"
-  to = "https://master--calico-test.netlify.app/:splat"
+  to = "https://nightly--calico-test.netlify.app/master/:splat"
   status = 200
   force = true
 
