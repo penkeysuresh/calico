@@ -7,6 +7,8 @@
   RUBY_VERSION = "2.5.4"
   RELEASE_VERSION = "v3.15"
 
+# One jekyll build here generates the website which is served at root / other build generates a permalink site
+# served on /archive/<version> path, order of the build matters since destination folders are cleaned on each builds
 [context.production]
   command = '''
   cp netlify/Gemfile Gemfile && bundle install
@@ -23,8 +25,9 @@
   mv netlify/_redirects _site/_redirects
   '''
 
-# Deploys branches specified in netlify UI as seperate individual sites (all release branches)
-
+# One jekyll build here generates the website which is served at /archive/<version>/ other build generates only manifests
+# served on /<version>/ path, order of the build matters since destination folders are cleaned on each builds
+# 404 page moved to root of the site so that netlify shows it automatically
 [context.branch-deploy]
   command = '''
   cp netlify/Gemfile Gemfile && bundle install
@@ -45,8 +48,8 @@
   mv netlify/_redirects _site/_redirects
   '''
 
-# Deploys master branch as a seperate individual sites (all release branches)
-# Master is to have baseurl set as /master in the _config.yml
+# Deploys master branch as a seperate individual site, master build is diffrent from branch deploys
+# it doesn't have a manifests only build and served without /archive prefix
 [context.master]
   command = '''
   make bin/helm
@@ -97,12 +100,13 @@
   status = 200
   force = true
 
-# site redirects for archive sites
+# site redirects for archive sites, one redirect is sufficient for the entire release legacy site.
+# force here is false to allow serving of permalink site generated on production site at /archive/<version>/
 [[redirects]]
   from = "/archive/*"
   to = "https://release-legacy--calico-test.netlify.app/archive/:splat"
   status = 200
-  force = true
+  force = false
 
 # supporting /<version>/manifests/<manifest.yaml> format for archive sites
 [[redirects]]
