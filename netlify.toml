@@ -27,7 +27,6 @@
 
 # One jekyll build here generates the website which is served at /archive/<version>/ other build generates only manifests
 # served on /<version>/ path, order of the build matters since destination folders are cleaned on each builds
-# 404 page moved to root of the site so that netlify shows it automatically
 [context.branch-deploy]
   command = '''
   cp netlify/Gemfile Gemfile && bundle install
@@ -35,6 +34,7 @@
   export PATH=$PATH:$(pwd)/bin
   jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml,$(pwd)/netlify/_manifests_only.yml --baseurl /$RELEASE_VERSION --destination _site/$RELEASE_VERSION
   jekyll build --config _config.yml,$(pwd)/netlify/_config_noindex.yml --baseurl /archive/$RELEASE_VERSION --destination _site/archive/$RELEASE_VERSION
+  # 404 page moved to root of the site so that netlify shows it automatically
   mv _site/archive/$RELEASE_VERSION/404.html _site/404.html
   '''
 
